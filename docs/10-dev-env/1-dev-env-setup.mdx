@@ -12,6 +12,42 @@ Navigate to [this](https://github.com/codespaces/new/mongodb-developer/rm-lab?qu
 
 Let it run for a few minutes as it prepares a Docker container with all the required libraries and a MongoDB cluster.
 
+Your codespace will be ready when you see the MongoDB leaf on the VS Code extensions bar. Click it to connect to the MongoDB container.
+
+<Screenshot url="https://github.com/codespaces" src="img/10-dev-env/2-mongodb-is-ready.png" alt="MongoDB is ready" />
+
+Click on the `mongodb-container` connection and then on the `Create New Playground` button
+
+<Screenshot url="https://github.com/codespaces" src="img/10-dev-env/3-create-playground.png" alt="Run playground" />
+
+You need to create a database to migrate your exisiting PostgreSQL data into. Clear the playground area and copy and paste the following code in it:
+
+```js
+use('library-migrated');
+
+// Add a new collection with a dummy document to ensure database creation.
+db.test.insertOne({
+  message: "Test collection created successfully for library-migrated database.",
+  timestamp: new Date()
+});
+
+// Create the user "lab" with readWrite access to the "library-migrated" database.
+db.createUser({
+  user: 'lab',
+  pwd: 'mongodb',
+  roles: [
+    {
+      role: 'readWrite',
+      db: 'library-migrated',
+    },
+  ],
+});
+```
+
+Now, click on the `Play` button to run the playground. You might have to approve the query execution by clicking `Yes` on the popup.
+
+<Screenshot url="https://github.com/codespaces" src="img/10-dev-env/4-create-user.png" alt="Run playground" />
+
 **That's it! You're ready for the lab!**
 
 :::caution
